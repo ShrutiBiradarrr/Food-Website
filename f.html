@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Data Validation Form</title>
+  <style>
+    /* CSS for form styling */
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label {
+      margin-top: 10px;
+    }
+
+    input[type="submit"] {
+      margin-top: 20px;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>User Data Validation Form</h1>
+  <form id="user-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email">
+
+    <label for="address">Address:</label>
+    <textarea id="address" name="address"></textarea>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    // JavaScript for form validation
+    const form = document.getElementById("user-form");
+    const nameInput = document.getElementById("name");
+    const passwordInput = document.getElementById("password");
+    const phoneInput = document.getElementById("phone");
+    const emailInput = document.getElementById("email");
+    const addressInput = document.getElementById("address");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!validateName(nameInput.value)) {
+        displayErrorMessage(nameInput, "Invalid name");
+      } else if (!validatePassword(passwordInput.value)) {
+        displayErrorMessage(passwordInput, "Invalid password");
+      } else if (!validatePhone(phoneInput.value)) {
+        displayErrorMessage(phoneInput, "Invalid phone number");
+      } else if (!validateEmail(emailInput.value)) {
+        displayErrorMessage(emailInput, "Invalid email");
+      } else if (!validateAddress(addressInput.value)) {
+        displayErrorMessage(addressInput, "Invalid address");
+      } else {
+        alert("Form submitted successfully!");
+        form.reset();
+      }
+    });
+
+    function validateName(name) {
+      const regex = /^[a-zA-Z\s]+$/;
+      return regex.test(name);
+    }
+
+    function validatePassword(password) {
+      const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+      return regex.test(password);
+    }
+
+    function validatePhone(phone) {
+      const regex = /^\d{10}$/;
+      return regex.test(phone);
+    }
+
+    function validateEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    function validateAddress(address) {
+      const regex = /^[a-zA-Z0-9\s,'-]*$/;
+      return regex.test(address);
+    }
+
+    function displayErrorMessage(input, message) {
+      const errorMessageElement = input.parentElement.querySelector(".error-message");
+      errorMessageElement.innerText = message;
+    }
+  </script>
+</body>
+</html>
